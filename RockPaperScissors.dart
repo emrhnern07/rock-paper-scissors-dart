@@ -1,53 +1,55 @@
 import 'dart:io';
 import 'dart:math';
-enum Move { Tas, Kagit, Makas }
+
+enum Move { Rock, Paper, Scissors }
+
 void main() {
   //User Welcome
   int pcscore = 0;
   int uscore = 0;
-  stdout.write("isminizi giriniz : ");
+  stdout.write("Enter your name : ");
   var username = stdin.readLineSync();
-  print("Merhaba  $username! Taş Kağıt Makas oyununa hoşgeldiniz........ ");
+  print("Hello!!!  $username! Welcome to Rock Paper Scissors game");
   while (true) {
-    final tkm = Random();
+    final rnd = Random();
     //User selection input
     stdout.write(
-        'Taş için => T   Kağıt için => K   Makas için M  Çıkış için => Q  GİRİNİZ... ');
+        'For Rock => R     for Paper => P      for Scissors => S        for Quit => ENTER Q... ');
     final input = stdin.readLineSync();
-    if (input == 'T' || input == 'K' || input == 'M') {
-      Move secim;
-      if (input == 'T') {
-        secim = Move.Tas;
-      } else if (input == 'K') {
-        secim = Move.Kagit;
+    if (input == 'R' || input == 'P' || input == 'S') {
+      Move userMove;
+      if (input == 'R') {
+        userMove = Move.Rock;
+      } else if (input == 'P') {
+        userMove = Move.Paper;
       } else {
-        secim = Move.Makas;
+        userMove = Move.Scissors;
       }
       //pc get random value
-      var random = tkm.nextInt(3);
-      var pcsecim = Move.values[random];
+      var random = rnd.nextInt(3);
+      var pcMove = Move.values[random];
       //print the entered selections
-      print('GİRİLEN DEĞER: $input');
-      print('Seçimin : ${secim.name}');
-      print('Pc Seçimi     : ${pcsecim.name}');
+      print('Entered Value: $input');
+      print('Your choice : ${userMove.name}');
+      print('Pc choice   : ${pcMove.name}');
       //draw status
-      if (secim == pcsecim) {
-        print("BERABERE  ");
-        print('"BİLGİSAYAR SKOR : $pcscore | $username SKOR : $uscore ");');
+      if (userMove == pcMove) {
+        print("DRAW ! ");
+        print('"COMPUTER SCORE : $pcscore | $username SCORE : $uscore ");');
       }
       //user wins
-      else if (secim == Move.Kagit && pcsecim == Move.Tas ||
-          secim == Move.Tas && pcsecim == Move.Makas ||
-          secim == Move.Makas && pcsecim == Move.Kagit) {
-        print('KAZANDIN !!! $username Tebrikler');
+      else if (userMove == Move.Paper && pcMove == Move.Rock ||
+          userMove == Move.Rock && pcMove == Move.Scissors ||
+          userMove == Move.Scissors && pcMove == Move.Paper) {
+        print('YOU WİN  !!! $username CONGRATULATIONS');
         uscore++;
-        print('"BİLGİSAYAR SKOR : $pcscore | $username SKOR : $uscore ");');
+        print('"COMPUTER SCORE : $pcscore | $username SCORE : $uscore ");');
       }
       // pc wins
       else {
-        print('KAYBETTİN !!! $username bir daha dene');
+        print('YOU LOSE  $username TRY AGAIN');
         pcscore++;
-        print('"BİLGİSAYAR SKOR : $pcscore | $username SKOR : $uscore ");');
+        print('"COMPUTER SCORE : $pcscore | $username SCORE : $uscore ");');
       }
     }
     //check out
@@ -57,7 +59,7 @@ void main() {
     //invalid input
     else {
       print(
-          'geçersiz giriş lütfen  taş için T , kağıt için K , makas için M giriniz  !!!!!! ');
+          'invalid input please enter R for rock, P for paper, S for scissors !!!!!! ');
     }
   }
 }
